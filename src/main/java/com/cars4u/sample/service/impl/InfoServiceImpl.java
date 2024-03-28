@@ -114,9 +114,33 @@ public class InfoServiceImpl implements InfoService {
 	}
 
 	@Override
-	public Info updateDetails(Info info) {
-		
-		return null;
+	public Boolean updateDetails(Info info) {
+		Info infoObj = new Info();
+		Boolean res= false;
+		try {
+			if (info.getId() != null) {
+				infoObj = infoRepository.findAllById(info.getId());
+				if (infoObj != null) {
+					infoObj.setName(info.getName());
+					infoObj.setMailId(info.getMailId());
+					infoObj.setMobileNo(info.getMobileNo());
+					infoObj.setDate(info.getDate());
+					infoObj.setReason(info.getReason());
+					infoObj.setStatus(info.getStatus());
+					infoObj.setType(info.getType());
+					infoObj.setVehicleModel(info.getVehicleModel());
+					infoObj.setVehicleName(info.getVehicleName());
+				}
+					infoRepository.save(infoObj);
+					res = true;
+					return res;
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 	
 

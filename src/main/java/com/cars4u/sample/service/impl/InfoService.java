@@ -12,6 +12,6 @@ public interface InfoService {
 
 	List<Info> getAllInfoList();
 
-	Info updateDetails(Info info);
+	Boolean updateDetails(Info info);
 
 }

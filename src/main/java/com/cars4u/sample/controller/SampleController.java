@@ -220,8 +220,11 @@ public class SampleController {
 	@RequestMapping(value="updateForm" , method = {RequestMethod.GET , RequestMethod.POST})
 	public ModelAndView updateForm(Info info) {
 		ModelAndView modelAndView = new ModelAndView();
-		
-		Info res = infoService.updateDetails(info);
+		Boolean res = false;
+		res = infoService.updateDetails(info);
+		if(res) {
+			return new ModelAndView("redirect:/sample/status");
+		} 
 		return modelAndView;
 		
 	}
