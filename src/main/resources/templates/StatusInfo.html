@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="https://www.thymeleaf.org/">
+
+<head>
+	<title>Sample</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+		crossorigin="anonymous"></script>
+		<style>
+		.image {
+			width: 28px;
+			height: 28px;
+		}
+		.font{
+			font-family: cursive;
+			font-style: oblique;
+			font-size: 60px;
+		}
+	</style>
+</head>
+<body>
+	<img th:src="@{/images/black2.jpeg}" class="img-fluid object-fit-fill" style="width: 100%; height: 61rem;">
+	<div class="card-img-overlay">
+	<div th:replace="~{fragments/header :: navbar}"></div>
+	<br>
+		<div class="row justify-content-center my-2">
+				<div class="col-11">
+					<table class="table table-dark table-hover ">
+						<tr class="table-dark text-light">
+							<th width="5%" class="text-center">#</th>
+							<th  width="10%" class="text-center">TOKEN NUMBER</th>
+							<th  width="10%" class="text-center">NAME</th>
+							<th  width="10%" class="text-center">VEHICLE NAME</th>
+							<th  width="10%" class="text-center">DATE OF SERVICE</th>
+							<th  width="10%" class="text-center">STATUS</th>
+							<th  width="8%" class="text-center"></th>
+						</tr>
+						
+						<tr th:if="info==null OR ${#lists.isEmpty(info)}" class="table-secondary">
+							<td colspan="9" class="text-center">-- No Data Found --</td>
+						</tr>
+						<tr th:if="${not #lists.isEmpty(info)}" th:each="data , status : ${info}" class="detailsRow table-secondary">
+							<td class="text-center" th:text="${status.count}"></td>
+							<td class="text-center"><span class="text-uppercase" th:text="${data.sequenceNo}"></span></td>
+							<td class="text-center"><span class="text-uppercase" th:text="${data.name}"></span></td>
+							<td class="text-center"><span class="text-uppercase" th:text="${data.vehicleName}"></span></td>
+							<td class="text-center"><span class="text-uppercase" th:text="${#dates.format(data.date,'dd-MM-yyyy')}"></span></td>
+							<td class="text-center text-success fw-bold"><span class="text-uppercase" th:text="${data.status}"></span></td>
+							<td class="text-center"><a th:href="@{/sample/editDetails?id(id=${data.idEnc('/sample/editDetails')})}"><img class="image"
+										th:src="@{/images/edit.png}"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
+									href="#"><img class="image" th:src="@{/images/downloading.png}"></a></td>
+							
+						</tr>
+					</table>
+				</div>
+		</div>
+</html>
