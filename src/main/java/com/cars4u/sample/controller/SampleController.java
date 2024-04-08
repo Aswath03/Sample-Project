@@ -199,20 +199,23 @@ public class SampleController {
 	}
 	
 	@RequestMapping(value="editDetails" , method = {RequestMethod.GET , RequestMethod.POST})
-	public ModelAndView editDetails(@RequestParam String id) {
+	public ModelAndView editDetails( @RequestParam (required = false) String id , @RequestParam (required = false) String ajaxMessage ) {
 		ModelAndView modelAndView = new ModelAndView();
 		Long infoId = EncryptionUtils.decrypt(id);
 		Info info = new Info();
 		if(infoId != null) {
 			info = infoService.getDetailsById(infoId);
 		}
-//		Date date = info.getDate();
-//		Instant instant = date.toInstant();
-//		LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//		String dateStr = localDate.format(formatter);
+		Date date = info.getDate();
+		Instant instant = date.toInstant();
+		LocalDate localDate = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String dateStr = localDate.format(formatter);
 		modelAndView.addObject("info", info);
-		//modelAndView.addObject("dateStr", dateStr);
+		if(ajaxMessage != null && ajaxMessage.equals("F")) {
+			modelAndView.addObject("ajaxMessage", "Your updates have not saved !");
+		}
+		modelAndView.addObject("dateStr", dateStr);
 		modelAndView.setViewName("EditForm");
 		return modelAndView;	
 	}
@@ -220,12 +223,15 @@ public class SampleController {
 	@RequestMapping(value="updateForm" , method = {RequestMethod.GET , RequestMethod.POST})
 	public ModelAndView updateForm(Info info) {
 		ModelAndView modelAndView = new ModelAndView();
+		ModelMap modelMap = new ModelMap();
 		Boolean res = false;
 		res = infoService.updateDetails(info);
 		if(res) {
 			return new ModelAndView("redirect:/sample/status");
-		} 
-		return modelAndView;
+		} else {
+			modelMap.addAttribute("ajaxMessage", "F");
+			return new ModelAndView("redirect:/sample/editDetails");
+		}
 		
 	}
 

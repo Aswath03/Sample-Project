@@ -52,8 +52,8 @@
 							<td class="text-center"><span class="text-uppercase" th:text="${#dates.format(data.date,'dd-MM-yyyy')}"></span></td>
 							<td class="text-center text-success fw-bold"><span class="text-uppercase" th:text="${data.status}"></span></td>
 							<td class="text-center"><a th:href="@{/sample/editDetails?id(id=${data.idEnc('/sample/editDetails')})}"><img class="image"
-										th:src="@{/images/edit.png}"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-									href="#"><img class="image" th:src="@{/images/downloading.png}"></a></td>
+										th:src="@{/images/edit.png}"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<a th:href="@{/final/generatePdf?id(id=${data.idEnc('/final/generatePdf')})}"><img class="image" th:src="@{/images/downloading.png}"></a></td>
 							
 						</tr>
 					</table>

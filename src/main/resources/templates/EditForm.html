@@ -16,63 +16,73 @@
 <body>
 	<img th:src="@{/images/black2.jpeg}" class="img-fluid object-fit-fill" style="width: 100%; height: 61rem;">
 	<div class="card-img-overlay">
-	<div th:replace="~{fragments/header :: navbar}"></div>
-	<div class="container card bg-transparent mb-3 rounded-2" style="margin-top: 2%;">
-		<form th:object="${info}" th:action="@{/sample/updateForm}" method="post" enctype="multipart/form-data"
-			onsubmit="return checkFileSize()">
-			<div class="row g-3">
-					<input type="hidden" th:field="*{id}" th:value="*{id}">
-				<div class="form-group col-md-6">
-					<label for="name" class="text-light">Name<sup class="text-danger">&nbsp;*</sup></label>
-					<input type="text" id="name" class="form-control" th:field="*{name}" required>
-				</div>
-				<div class="form-group col-md-6">
-					<label for="email" class="text-light">Email<sup class="text-danger">&nbsp;*</sup></label>
-					<input type="email" id="email" class="form-control" th:field="*{mailId}" required>
-				</div>
-				<div class="form-group col-md-6">
-					<label for="mobileNo" class="text-light">Contact No<sup class="text-danger">&nbsp;*</sup></label>
-					<input type="text" id="mobileNo" class="form-control" th:field="*{mobileNo}" required>
-				</div>
-				<div class="form-group col-md-6">
-					<label for="date" class="text-light">Date<sup class="text-danger">&nbsp;*</sup></label>
-					<input type="date" id="date" class="form-control fromDatetimepicker" th:field="*{date}" required>
-				</div>
-				<div class="form-group col-md-6">
-					<label for="vehicleName" class="text-light">Vehicle Name<sup
-							class="text-danger">&nbsp;*</sup></label>
-					<input type="text" id="vehicleName" class="form-control" th:field="*{vehicleName}" required>
-				</div>
-				<div class="form-group col-md-5">
-					<label for="vehicleModel" class="text-light">Vehicle Model<sup
-							class="text-danger">&nbsp;*</sup></label>
-					<input type="text" id="vehicleModel" class="form-control" th:field="*{vehicleModel}" required>
-				</div>
-				<div class="form-group col-md-1">
-					<label for="type" class="text-light">Type<sup class="text-danger">&nbsp;*</sup></label>
-					<select class="custom-select" th:field="*{type}" required>
-						<option value="">Select</option>
-						<option value="Full Service">Full Service</option>
-						<option value="Other">Other</option>
-					</select>
-				</div>
-				<div class="form-group col-md-6">
-					<label for="remarks" class="text-light">Remarks<sup class="text-danger">&nbsp;*</sup></label>
-					<input type="text" id="remarks" class="form-control" th:field="*{reason}" required>
-				</div>
-				<div class="form-group col-md-6">
-					<label for="file" class="text-light">Attachments </label>
-					<input type="file" class="form-control-file text-light " id="file" accept=".pdf"
-						th:field="*{uploadFile}"><br><sup class="text-danger">(max limit:10MB)</sup>
-				</div>
-				<div class="col-12">
-					<button type="submit" class="btn btn-success d-grid gap-2 col-3 mx-auto">Update Your Service</button>
+		<div th:replace="~{fragments/header :: navbar}"></div>
+		<div class="container mb-3" style="width: 50rem; margin-top: 2rem;">
+			<div class="row" th:if="${ajaxMessage!=null&&ajaxMessage!=''}">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2">
+					<div class="alert alert-info rounded-0 mb-0" role="alert">
+						<ul class="mb-0">
+							<li><span th:text="${ajaxMessage}"></span></li>
+						</ul>
+					</div>
 				</div>
 			</div>
+		</div>
+		<div class="container card bg-transparent mb-3 rounded-2" style="margin-top: 2%;">
+			<form th:object="${info}" th:action="@{/sample/updateForm}" method="post" enctype="multipart/form-data"
+				onsubmit="return checkFileSize()">
+				<div class="row g-3">
+					<input type="hidden" th:field="*{id}" th:value="*{id}">
+					<div class="form-group col-md-6">
+						<label for="name" class="text-light">Name<sup class="text-danger">&nbsp;*</sup></label>
+						<input type="text" id="name" class="form-control" th:field="*{name}" required>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="email" class="text-light">Email<sup class="text-danger">&nbsp;*</sup></label>
+						<input type="email" id="email" class="form-control" th:field="*{mailId}" required>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="mobileNo" class="text-light">Contact No<sup
+								class="text-danger">&nbsp;*</sup></label>
+						<input type="text" id="mobileNo" class="form-control" th:field="*{mobileNo}" required>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="date" class="text-light">Date<sup class="text-danger">&nbsp;*</sup></label>
+						<input type="date" id="date" class="form-control fromDatetimepicker" th:value="${dateStr}" 
+							readonly>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="vehicleName" class="text-light">Vehicle Name<sup
+								class="text-danger">&nbsp;*</sup></label>
+						<input type="text" id="vehicleName" class="form-control" th:field="*{vehicleName}" readonly>
+					</div>
+					<div class="form-group col-md-5">
+						<label for="vehicleModel" class="text-light">Vehicle Model<sup
+								class="text-danger">&nbsp;*</sup></label>
+						<input type="text" id="vehicleModel" class="form-control" th:field="*{vehicleModel}" readonly>
+					</div>
+					<div class="form-group col-md-1">
+						<label for="type" class="text-light">Type<sup class="text-danger">&nbsp;*</sup></label>
+						<select class="custom-select" th:field="*{type}" aria-readonly="true">
+							<option value="">Select</option>
+							<option value="Full Service">Full Service</option>
+							<option value="Other">Other</option>
+						</select>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="remarks" class="text-light">Remarks<sup class="text-danger">&nbsp;*</sup></label>
+						<input type="text" id="remarks" class="form-control" th:field="*{reason}" required>
+					</div>
+					<div class="col-12">
+						<button type="submit" class="btn btn-success d-grid gap-2 col-3 mx-auto">Update Your
+							Service</button>
+					</div>
+				</div>
 
-		</form>
-	</div>
+			</form>
+		</div>
 
-	
+
 </body>
+
 </html>

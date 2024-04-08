@@ -85,6 +85,23 @@
 	var today = new Date().toISOString().split('T')[0];
 	// Set the minimum date to today
 	document.getElementById("date").setAttribute("min", today);
+
+	// Function to disable Sundays
+	function disableSundays() {debugger
+		// Get the date input field
+		var dateInput = document.getElementById("date");
+
+		// Get the selected date
+		var selectedDate = new Date(dateInput.value);
+		// Check if the selected date is a Sunday
+		if (selectedDate.getDay() === 0) { // Sunday is represented by 0 in JavaScript
+			// Disable the input for Sundays
+			dateInput.disabled = true;
+		}
+	}
+
+	// Disable Sundays when the page loads
+	disableSundays();
 </script>
 
 

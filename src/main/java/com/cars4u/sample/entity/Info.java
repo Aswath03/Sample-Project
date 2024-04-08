@@ -63,6 +63,8 @@ public class Info {
 	private String dateStr;
 	@Transient
 	private String fileName; 
+	@Transient
+	private String particulars;
 	
 //	public String idEnc() {
 //		return new MaskParam().mask(null, this.id.toString());

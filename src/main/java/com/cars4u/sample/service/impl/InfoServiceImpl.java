@@ -112,7 +112,8 @@ public class InfoServiceImpl implements InfoService {
 			return null;
 		}
 	}
-
+	
+	@Transactional
 	@Override
 	public Boolean updateDetails(Info info) {
 		Info infoObj = new Info();
@@ -124,12 +125,18 @@ public class InfoServiceImpl implements InfoService {
 					infoObj.setName(info.getName());
 					infoObj.setMailId(info.getMailId());
 					infoObj.setMobileNo(info.getMobileNo());
-					infoObj.setDate(info.getDate());
+				//	infoObj.setDate(info.getDate());
 					infoObj.setReason(info.getReason());
 					infoObj.setStatus(info.getStatus());
 					infoObj.setType(info.getType());
 					infoObj.setVehicleModel(info.getVehicleModel());
 					infoObj.setVehicleName(info.getVehicleName());
+					if (info.getDateStr() != null) {
+						DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+					   LocalDate localDate = LocalDate.parse(info.getDateStr(), formatter);
+					   Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+					   infoObj.setDate(date);
+				}
 				}
 					infoRepository.save(infoObj);
 					res = true;
