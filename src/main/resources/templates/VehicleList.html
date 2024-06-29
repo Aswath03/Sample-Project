@@ -1,0 +1,33 @@
+<div class="row justify-content-center mt-4">
+	<div th:if="${response!=null}">
+		<div class="row  mt-3 pb-5">
+			<div class="col-5">
+
+				<table class="table table-dark table-hover">
+
+					<tr class="table-dark text-light">
+						<th width="5%" class="text-center">#</th>
+						<th class="text-center">Vehicle Name</th>
+					</tr>
+
+					<tbody>
+						<tr th:if="response==null OR ${#lists.isEmpty(response)}">
+							<td colspan="9" class="text-center">-- No Data Found --</td>
+						</tr>
+
+						<tr th:if="${not #lists.isEmpty(response)}" th:each="data, status : ${response}"
+							class="detailsRow table-secondary">
+
+							<td class="text-center" th:text="${status.count}"></td>
+							<td class="text-center">
+								<span th:if="${data.vehicleName==null}">--</span>
+								<span th:unless="${data.vehicleName==null}"></span>
+								<span class="text-uppercase" th:text="${data.vehicleName}"></span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

@@ -222,7 +222,6 @@ public class SampleController {
 	
 	@RequestMapping(value="updateForm" , method = {RequestMethod.GET , RequestMethod.POST})
 	public ModelAndView updateForm(Info info) {
-		ModelAndView modelAndView = new ModelAndView();
 		ModelMap modelMap = new ModelMap();
 		Boolean res = false;
 		res = infoService.updateDetails(info);
@@ -233,6 +232,13 @@ public class SampleController {
 			return new ModelAndView("redirect:/sample/editDetails");
 		}
 		
+	}
+	
+	@RequestMapping(value = "api/info",method = {RequestMethod.GET , RequestMethod.POST})
+	public ModelAndView apiInfo() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("ApiVehicleList");
+		return modelAndView;
 	}
 
 

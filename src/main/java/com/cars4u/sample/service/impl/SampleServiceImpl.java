@@ -1,9 +1,13 @@
 package com.cars4u.sample.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cars4u.sample.api.dto.ApiResponseDTO;
 import com.cars4u.sample.entity.Sample;
+import com.cars4u.sample.feign.service.SampleFeignService;
 import com.cars4u.sample.repo.SampleRepo;
 
 @Service
@@ -11,7 +15,11 @@ public class SampleServiceImpl implements SampleService {
 
 	@Autowired
 	SampleRepo repo;
-
+	@Autowired
+	SampleFeignService sampleFeignService;
+//	@Autowired
+//	CommonUtils commonUtils;
+	
 	@Override
 	public Sample saveAllDetails(Sample sample) {
 
@@ -52,6 +60,23 @@ public class SampleServiceImpl implements SampleService {
 		}
 		return res;
 
+	}
+
+	@Override
+	public List<ApiResponseDTO> fetchAllVehicleDetails(String year) {
+		List<ApiResponseDTO> response = null;
+ 
+		try {
+//			response = commonUtils.getVehicleDetails(year);
+			response = sampleFeignService.getAllVehicleDetails(year);
+			if (response != null) {
+				return response;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return response;
 	}
 }
 
